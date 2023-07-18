@@ -27,7 +27,7 @@ labels=[]
 
 count = 0
 
-person_dir = "human"
+person_dir = "data/human/"
 
 files_in_directory = os.listdir(person_dir)
 
@@ -40,16 +40,22 @@ for file in random.sample(files_in_directory, 500):
     if count > 500:
         break
 
-count = 0
-ai_dir = "/home/ipfs10/vicuna/temp/speech/train/"
-files_in_directory = os.listdir(ai_dir)
-for file in files_in_directory:
-    print(file)
-    labels.append("ai")
-    data = extract_features(ai_dir + file)
-    features.append(data)
-    if count > 500:
-        break
+
+ai_dir = "data/ai/"
+dirs_in_directory = os.listdir(ai_dir)
+
+for dir in dirs_in_directory:
+    if os.path.isdir(ai_dir + dir):
+        files_in_directory = os.listdir(ai_dir + dir)
+        count = 0
+        for file in files_in_directory:
+            print(file)
+            labels.append("ai")
+            data = extract_features(ai_dir + dir + "/"+ file)
+            features.append(data)
+            count += 1
+            if count > 500:
+                break
 
 
 # 假设你有一个音频文件列表 audio_files 和对应的标签列表 labels
@@ -76,5 +82,5 @@ y_pred = clf.predict(X_test)
 # 计算精度
 print("Accuracy:", accuracy_score(y_test, y_pred))
 
-dump(clf, 'ai_detect.joblib') 
+dump(clf, 'audio_detect.joblib') 
 
