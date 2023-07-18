@@ -5,6 +5,7 @@ import soundfile as sf
 from datasets import load_dataset
 import random
 import nltk
+import os
 
 # 读取文件
 with open('../art/en.txt', 'r', encoding='utf-8') as f:
@@ -22,9 +23,15 @@ vocoder = SpeechT5HifiGan.from_pretrained("microsoft/speecht5_hifigan")
 # load xvector containing speaker's voice characteristics from a dataset
 embeddings_dataset = load_dataset("Matthijs/cmu-arctic-xvectors", split="validation")
 
+
+# if there is no ../ai/speecht5 directory then create it
+if not os.path.exists("../ai/speecht5"):
+    os.makedirs("../ai/speecht5")
+
+
 count = 0
 for i in range(1, 101):
-    random_number = random.randint(1, 7000)
+    random_number = random.randint(1, 7000) # embeddings_dataset has arround 7000 samples
     speaker_embeddings = torch.tensor(embeddings_dataset[random_number]["xvector"]).unsqueeze(0)
 
     # 生成一个随机数（在1到3之间）

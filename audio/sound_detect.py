@@ -3,6 +3,7 @@ import librosa
 from joblib import load
 import os
 
+# for testing
 # 加载保存的分类器
 clf = load('ai_detect.joblib') 
 

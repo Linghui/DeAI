@@ -7,6 +7,8 @@ from datasets import load_dataset
 import random
 import nltk
 
+
+# 并行声音生成测试，结果不理想 效率没有提高
 # 读取文件
 with open('art.txt', 'r', encoding='utf-8') as f:
     text = f.read()
