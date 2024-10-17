@@ -3,6 +3,7 @@ import numpy as np
 import librosa
 from joblib import load
 import os
+from PIL import Image
 
 from fastapi import FastAPI, UploadFile, File, Request
 from fastapi.responses import HTMLResponse
@@ -53,3 +54,16 @@ async def create_upload_file(file: UploadFile = File(...)):
     # print(predictions)
 
     return {"filename": file.filename, "prediction": predictions[0]}
+
+@app.post("/uploadimage/")
+async def upload_image(file: UploadFile = File(...)):
+    contents = await file.read()
+
+    with open(f"{file.filename}", "wb") as f:
+        f.write(contents)
+    
+    image = Image.open(file.filename)
+    image = image.convert("RGB")
+    image.save(f"processed_{file.filename}")
+
+    return {"filename": file.filename, "message": "Image uploaded successfully"}
