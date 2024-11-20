@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cat Canvas</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Control the Cat</h1>
+    <canvas id="catCanvas" width="500" height="500"></canvas>
+    <script>
+        const canvas = document.getElementById('catCanvas');
+        const ctx = canvas.getContext('2d');
+
+        const cat = {
+            x: 250,
+            y: 250,
+            size: 20,
+            color: 'orange'
+        };
+
+        const KEY_UP = 'ArrowUp';
+        const KEY_DOWN = 'ArrowDown';
+        const KEY_LEFT = 'ArrowLeft';
+        const KEY_RIGHT = 'ArrowRight';
+
+        function drawCat() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = cat.color;
+            ctx.fillRect(cat.x, cat.y, cat.size, cat.size);
+        }
+
+        function moveCat(event) {
+            const key = event.key;
+            if (key === KEY_UP) {
+                cat.y -= 10;
+            } else if (key === KEY_DOWN) {
+                cat.y += 10;
+            } else if (key === KEY_LEFT) {
+                cat.x -= 10;
+            } else if (key === KEY_RIGHT) {
+                cat.x += 10;
+            }
+            drawCat();
+        }
+
+        document.addEventListener('keydown', moveCat);
+
+        drawCat();
+    </script>
+</body>
+</html>

@@ -67,3 +67,7 @@ async def upload_image(file: UploadFile = File(...)):
     image.save(f"processed_{file.filename}")
 
     return {"filename": file.filename, "message": "Image uploaded successfully"}
+
+@app.get("/cat_canvas", response_class=HTMLResponse)
+async def get_cat_canvas(request: Request):
+    return templates.TemplateResponse("cat_canvas.html", {"request": request})
