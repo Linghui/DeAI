@@ -44,3 +44,25 @@ python server/json_to_csv.py
 ```
 
 The script will read the `example.json` file and create an `output.csv` file with the converted data.
+
+## New Feature: Cat Control on Canvas
+
+We have added a new feature to control a cat using the arrow keys on a new page created with canvas. This feature allows users to interact with a cat on a canvas element and control its movement using the arrow keys.
+
+### How to Use the Cat Control Feature
+
+1. Open the main page of the application.
+2. Navigate to the `/cat_canvas` endpoint.
+3. You will see a canvas element with a cat drawn on it.
+4. Use the arrow keys (Up, Down, Left, Right) to control the movement of the cat on the canvas.
+
+### Endpoint for Cat Control
+
+The cat control functionality is handled by the `/cat_canvas` endpoint. You can use this endpoint to access the cat control feature.
+
+Example:
+```
+GET /cat_canvas
+```
+
+The server will respond with an HTML page containing the canvas element and JavaScript code to control the cat.
