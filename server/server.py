@@ -4,6 +4,7 @@ import librosa
 from joblib import load
 import os
 from PIL import Image
+import sqlite3
 
 from fastapi import FastAPI, UploadFile, File, Request
 from fastapi.responses import HTMLResponse
@@ -28,6 +29,19 @@ clf = load('../ai_detect.joblib')
 app = FastAPI()
 
 templates = Jinja2Templates(directory="")
+
+@app.on_event("startup")
+async def startup():
+    conn = sqlite3.connect('scores.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS scores (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            score INTEGER NOT NULL
+        )
+    ''')
+    conn.commit()
+    conn.close()
 
 @app.get("/", response_class=HTMLResponse)
 async def read_root(request: Request):
@@ -71,3 +85,12 @@ async def upload_image(file: UploadFile = File(...)):
 @app.get("/cat_canvas", response_class=HTMLResponse)
 async def get_cat_canvas(request: Request):
     return templates.TemplateResponse("cat_canvas.html", {"request": request})
+
+@app.post("/submit_score/")
+async def submit_score(score: int):
+    conn = sqlite3.connect('scores.db')
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO scores (score) VALUES (?)', (score,))
+    conn.commit()
+    conn.close()
+    return {"message": "Score submitted successfully"}

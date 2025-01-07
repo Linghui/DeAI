@@ -66,3 +66,41 @@ GET /cat_canvas
 ```
 
 The server will respond with an HTML page containing the canvas element and JavaScript code to control the cat.
+
+## New Feature: Tetris Game with Backend Score Collection
+
+We have added a new feature to play a Tetris game and collect scores using a backend endpoint. This feature allows users to play a Tetris game implemented using JavaScript and HTML5 Canvas, and submit their scores to the backend for storage.
+
+### How to Access and Play the Tetris Game
+
+1. Open the main page of the application.
+2. Navigate to the `/tetris` endpoint.
+3. You will see a canvas element with the Tetris game.
+4. Use the arrow keys (Up, Down, Left, Right) to control the movement of the Tetris pieces.
+5. The score will be displayed on the screen, and the game will end when the pieces reach the top of the canvas.
+
+### Endpoint for Tetris Game
+
+The Tetris game functionality is handled by the `/tetris` endpoint. You can use this endpoint to access the Tetris game.
+
+Example:
+```
+GET /tetris
+```
+
+The server will respond with an HTML page containing the canvas element and JavaScript code to play the Tetris game.
+
+### Backend Score Collection
+
+The backend score collection functionality is handled by the `/submit_score/` endpoint. You can use this endpoint to submit scores to the backend for storage.
+
+Example:
+```
+POST /submit_score/
+Content-Type: application/json
+{
+    "score": <score_value>
+}
+```
+
+The server will respond with a JSON object containing a success message.
